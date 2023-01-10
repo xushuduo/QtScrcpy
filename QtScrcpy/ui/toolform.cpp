@@ -39,9 +39,9 @@ void ToolForm::initStyle()
 {
     IconHelper::Instance()->SetIcon(ui->fullScreenBtn, QChar(0xf0b2), 15);
     IconHelper::Instance()->SetIcon(ui->menuBtn, QChar(0xf096), 15);
-    IconHelper::Instance()->SetIcon(ui->homeBtn, QChar(0xf1db), 15);
+    IconHelper::Instance()->SetIcon(ui->homeBtn, QChar(0xf015), 15);
     //IconHelper::Instance()->SetIcon(ui->returnBtn, QChar(0xf104), 15);
-    IconHelper::Instance()->SetIcon(ui->returnBtn, QChar(0xf053), 15);
+    IconHelper::Instance()->SetIcon(ui->returnBtn, QChar(0xf112), 15);
     IconHelper::Instance()->SetIcon(ui->appSwitchBtn, QChar(0xf24d), 15);
     IconHelper::Instance()->SetIcon(ui->volumeUpBtn, QChar(0xf028), 15);
     IconHelper::Instance()->SetIcon(ui->volumeDownBtn, QChar(0xf027), 15);
