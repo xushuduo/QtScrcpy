@@ -14,7 +14,7 @@ ToolForm::ToolForm(QWidget *adsorbWidget, AdsorbPositions adsorbPos) : MagneticW
     ui->setupUi(this);
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     //setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint);
-    setMaximumWidth(45);
+    
     updateGroupControl();
 
     initStyle();
