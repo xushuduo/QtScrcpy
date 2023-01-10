@@ -175,6 +175,5 @@ void MagneticWidget::getGeometry(QRect &relativeWidgetRect, QRect &targetWidgetR
 
     targetWidgetRect.setTopLeft(pos());
     targetWidgetRect.setWidth(width());
-    targetWidgetRect.setWidth(45);
     targetWidgetRect.setHeight(height());
 }
