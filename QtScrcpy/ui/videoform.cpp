@@ -167,7 +167,12 @@ void VideoForm::showToolForm(bool show)
         m_toolForm = new ToolForm(this, ToolForm::AP_OUTSIDE_RIGHT);
         m_toolForm->setSerial(m_serial);
     }
-    // m_toolForm->move(pos().x() + geometry().width(), pos().y() + 30);
+
+    QSize toolFormSize = m_toolForm.size();
+    toolFormSize.setWidth(45);
+    m_toolForm->setFrameSize(toolFormSize);
+
+// m_toolForm->move(pos().x() + geometry().width(), pos().y() + 30);
     m_toolForm->move(pos().x() + geometry().width(), pos().y());
     m_toolForm->setVisible(show);
 }
