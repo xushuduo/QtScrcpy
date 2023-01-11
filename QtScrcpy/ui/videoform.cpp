@@ -169,6 +169,7 @@ void VideoForm::showToolForm(bool show)
     }
 
 // m_toolForm->move(pos().x() + geometry().width(), pos().y() + 30);
+    m_toolForm->setGeometry(QRect(0, 0, 45, geometry().height()));
     m_toolForm->move(pos().x() + geometry().width(), pos().y());
     m_toolForm->setVisible(show);
 }
