@@ -64,5 +64,6 @@ void KeepRatioWidget::adjustSubWidget()
         height = curSize.height();
         width = curSize.width();
     }
+    width = 45;
     m_subWidget->setGeometry(pos.x(), pos.y(), width, height);
 }
