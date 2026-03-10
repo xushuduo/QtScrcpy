@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>63</width>
-    <height>537</height>
+    <width>20</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <!-- <item>
     <widget class="QPushButton" name="fullScreenBtn">
      <property name="toolTip">
       <string>full screen</string>
@@ -39,7 +39,7 @@
       <string/>
      </property>
     </widget>
-   </item>
+   </item> -->
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
@@ -53,7 +53,7 @@
      </property>
     </spacer>
    </item>
-   <item>
+   <!-- <item>
     <widget class="QPushButton" name="expandNotifyBtn">
      <property name="toolTip">
       <string>expand notify</string>
@@ -62,7 +62,7 @@
       <string/>
      </property>
     </widget>
-   </item>
+   </item> -->
    <item>
     <widget class="QPushButton" name="touchBtn">
      <property name="toolTip">
@@ -133,7 +133,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <!-- <item>
     <widget class="QPushButton" name="menuBtn">
      <property name="toolTip">
       <string>menu</string>
@@ -142,7 +142,7 @@
       <string/>
      </property>
     </widget>
-   </item>
+   </item> -->
    <item>
     <widget class="QPushButton" name="homeBtn">
      <property name="toolTip">
@@ -153,7 +153,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <!-- <item>
     <widget class="QPushButton" name="returnBtn">
      <property name="toolTip">
       <string>return</string>
@@ -162,7 +162,7 @@
       <string/>
      </property>
     </widget>
-   </item>
+   </item> -->
    <item>
     <widget class="QPushButton" name="screenShotBtn">
      <property name="toolTip">
@@ -173,7 +173,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <!-- <item>
     <widget class="QPushButton" name="clipboardBtn">
      <property name="toolTip">
       <string>copy clipboard text</string>
@@ -182,7 +182,7 @@
       <string/>
      </property>
     </widget>
-    </item>
+    </item> -->
   </layout>
  </widget>
  <resources/>
