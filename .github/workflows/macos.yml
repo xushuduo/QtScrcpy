@@ -18,7 +18,7 @@ jobs:
     # qt5+intel mac编译intel没问题
     # qt5+arm mac编译intel会报错
     # https://github.com/actions/runner-images?tab=readme-ov-file#available-images
-    runs-on: macos-13
+    runs-on: macos-latest
     strategy:
       matrix:
         qt-ver: [5.15.2, 6.5.3]        
