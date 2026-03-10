@@ -18,7 +18,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="topMargin">
-    <number>30</number>
+    <number>20</number>
    </property>
    <item>
     <widget class="QPushButton" name="groupControlBtn">
@@ -47,8 +47,8 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>40</height>
+       <width>15</width>
+       <height>30</height>
       </size>
      </property>
     </spacer>
@@ -63,7 +63,7 @@
      </property>
     </widget>
    </item> -->
-   <item>
+   <!-- <item>
     <widget class="QPushButton" name="touchBtn">
      <property name="toolTip">
       <string>touch switch</string>
@@ -72,7 +72,7 @@
       <string/>
      </property>
     </widget>
-   </item>
+   </item> -->
    <item>
     <widget class="QPushButton" name="openScreenBtn">
      <property name="toolTip">
@@ -153,7 +153,7 @@
      </property>
     </widget>
    </item>
-   <!-- <item>
+   <item>
     <widget class="QPushButton" name="returnBtn">
      <property name="toolTip">
       <string>return</string>
@@ -162,7 +162,7 @@
       <string/>
      </property>
     </widget>
-   </item> -->
+   </item>
    <item>
     <widget class="QPushButton" name="screenShotBtn">
      <property name="toolTip">
