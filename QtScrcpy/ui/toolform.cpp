@@ -37,8 +37,8 @@ bool ToolForm::isHost()
 
 void ToolForm::initStyle()
 {
-    IconHelper::Instance()->SetIcon(ui->fullScreenBtn, QChar(0xf0b2), 15);
-    IconHelper::Instance()->SetIcon(ui->menuBtn, QChar(0xf096), 15);
+    // IconHelper::Instance()->SetIcon(ui->fullScreenBtn, QChar(0xf0b2), 15);
+    // IconHelper::Instance()->SetIcon(ui->menuBtn, QChar(0xf096), 15);
     IconHelper::Instance()->SetIcon(ui->homeBtn, QChar(0xf1db), 15);
     //IconHelper::Instance()->SetIcon(ui->returnBtn, QChar(0xf104), 15);
     IconHelper::Instance()->SetIcon(ui->returnBtn, QChar(0xf053), 15);
@@ -52,7 +52,7 @@ void ToolForm::initStyle()
     IconHelper::Instance()->SetIcon(ui->screenShotBtn, QChar(0xf0c4), 15);
     IconHelper::Instance()->SetIcon(ui->touchBtn, QChar(0xf111), 15);
     IconHelper::Instance()->SetIcon(ui->groupControlBtn, QChar(0xf0c0), 15);
-    IconHelper::Instance()->SetIcon(ui->clipboardBtn, QChar(0xf0c5), 15);
+    // IconHelper::Instance()->SetIcon(ui->clipboardBtn, QChar(0xf0c5), 15);
 }
 
 void ToolForm::updateGroupControl()
