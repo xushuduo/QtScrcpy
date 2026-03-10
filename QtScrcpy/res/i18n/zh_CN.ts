@@ -40,7 +40,7 @@
     <name>QObject</name>
     <message>
         <source>This software is completely open source and free. Use it at your own risk. You can download it at the following address:</source>
-        <translation>DIY版本！本软件完全开源免费，作者不对使用该软件产生的一切后果负责。你可以在以下地址下载：</translation>
+        <translation>本软件完全开源免费，作者不对使用该软件产生的一切后果负责。你可以在以下地址下载：</translation>
     </message>
     <message>
         <source>QuickMirror</source>

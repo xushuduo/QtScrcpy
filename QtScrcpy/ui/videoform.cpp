@@ -420,6 +420,7 @@ void VideoForm::updateShowSize(const QSize &newSize)
 
         m_widthHeightRatio = 1.0f * newSize.width() / newSize.height();
         // ui->keepRatioWidget->setWidthHeightRatio(m_widthHeightRatio);
+        // 跟着窗口拉伸
         ui->keepRatioWidget->setWidthHeightRatio(-1.0f);
 
         bool vertical = m_widthHeightRatio < 1.0f ? true : false;
