@@ -20,6 +20,7 @@ struct UserBootConfig
     bool autoOffScreen    = false;
     bool framelessWindow  = false;
     bool keepAlive        = false;
+    bool powerOffOnClose  = true;
     bool simpleMode       = false;
     bool autoUpdateDevice = true;
     bool showToolbar      = true;
