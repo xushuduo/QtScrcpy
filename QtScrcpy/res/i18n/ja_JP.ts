@@ -204,6 +204,10 @@
       <translation>画面を常時点灯</translation>
     </message>
     <message>
+        <source>power off on close</source>
+        <translation>閉じる時に電源を切る</translation>
+    </message>
+    <message>
       <source>device name:</source>
       <translatorcomment>デバイス名:</translatorcomment>
       <translation>デバイス名:</translation>

@@ -204,6 +204,10 @@
         <translation>保持唤醒</translation>
     </message>
     <message>
+        <source>power off on close</source>
+        <translation>断开时锁屏</translation>
+    </message>
+    <message>
         <source>device name:</source>
         <translatorcomment>设备名称:</translatorcomment>
         <translation>设备名称:</translation>

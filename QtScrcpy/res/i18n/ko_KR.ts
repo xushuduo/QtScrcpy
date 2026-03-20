@@ -204,6 +204,10 @@
         <translation>깨어 있기</translation>
     </message>
     <message>
+        <source>power off on close</source>
+        <translation>閉じる時に電源を切る</translation>
+    </message>
+    <message>
         <source>device name:</source>
         <translatorcomment>device name:</translatorcomment>
         <translation>장치 이름:</translation>

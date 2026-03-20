@@ -204,6 +204,10 @@
         <translation>stay awake</translation>
     </message>
     <message>
+        <source>power off on close</source>
+        <translation>power off on close</translation>
+    </message>
+    <message>
         <source>device name:</source>
         <translatorcomment>device name:</translatorcomment>
         <translation>device name:</translation>
