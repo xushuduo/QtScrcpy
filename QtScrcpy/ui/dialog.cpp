@@ -665,7 +665,18 @@ void Dialog::on_recordScreenCheck_clicked(bool checked)
 void Dialog::on_connectedPhoneList_itemDoubleClicked(QListWidgetItem *item)
 {
     Q_UNUSED(item);
-    ui->serialBox->setCurrentIndex(ui->connectedPhoneList->currentRow());
+    // 从 "NickName-serial" 格式中提取 serial
+    QString text = ui->connectedPhoneList->currentItem()->text();
+    int dashPos = text.lastIndexOf('-');
+    if (dashPos < 0) {
+        return;
+    }
+    QString serial = text.mid(dashPos + 1);
+    int idx = ui->serialBox->findText(serial);
+    if (idx < 0) {
+        return;
+    }
+    ui->serialBox->setCurrentIndex(idx);
     on_startServerBtn_clicked();
 }
 
