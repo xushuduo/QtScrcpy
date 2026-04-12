@@ -77,7 +77,7 @@ jobs:
           echo "::set-output name=package-name::${{ env.publish_name }}"
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.package.outputs.package-name }}.zip
+          name: ${{ steps.package.outputs.package-name }}
           path: ci/build/${{ steps.package.outputs.package-name }}.dmg
       # Upload to release
       - name: Upload Release

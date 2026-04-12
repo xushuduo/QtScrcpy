@@ -125,20 +125,26 @@ void ToolForm::showEvent(QShowEvent *event)
         }
     }
 
-    // 在所有按钮之间插入 stretch，使按钮均匀分布
-    int btnCount = ui->verticalLayout->count();
-    // 先清除已有的 stretch
-    for (int i = ui->verticalLayout->count() - 1; i >= 0; --i) {
-        QLayoutItem *item = ui->verticalLayout->itemAt(i);
-        if (item->spacerItem()) {
-            ui->verticalLayout->removeItem(item);
-            delete item;
+    // 清除已有 spacer 并重新插入，使按钮均匀分布
+    // 注意：m_layoutInited 防止多次 show 重复添加
+    static bool s_layoutInited = false;
+    if (!s_layoutInited) {
+        s_layoutInited = true;
+
+        // 清除已有 spacer
+        for (int i = ui->verticalLayout->count() - 1; i >= 0; --i) {
+            QLayoutItem *item = ui->verticalLayout->itemAt(i);
+            if (item->spacerItem()) {
+                ui->verticalLayout->removeItem(item);
+                delete item;
+            }
         }
-    }
-    // 在首尾和按钮间添加 stretch
-    btnCount = ui->verticalLayout->count();
-    for (int i = 0; i <= btnCount; ++i) {
-        ui->verticalLayout->insertStretch(i, 1);
+
+        // 在首尾和每两个按钮之间添加 stretch
+        int btnCount = ui->verticalLayout->count();
+        for (int i = btnCount; i >= 0; --i) {
+            ui->verticalLayout->insertStretch(i, 1);
+        }
     }
 #endif
 }
