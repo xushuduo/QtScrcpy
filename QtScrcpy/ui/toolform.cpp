@@ -17,15 +17,25 @@ ToolForm::ToolForm(QWidget *adsorbWidget, AdsorbPositions adsorbPos) : MagneticW
 
 #ifdef Q_OS_MACOS
     // macOS 上 QPushButton 有默认 content margins（左右各 ~12px），
-    // 导致 layout minimumSize 远大于 .ui 中设置的 20px 宽度。
-    // 将每个按钮设为固定大小并清除布局边距，使窗口能真正缩窄。
-    ui->verticalLayout->setContentsMargins(0, 0, 0, 0);
-    ui->verticalLayout->setSpacing(0);
+    // 导致 layout minimumSize 远大于 .ui 中设置的宽度。
+    // 将每个按钮设为固定大小，使窗口能真正缩窄。
     int btnSize = 30;
+    int windowWidth = 45;
     for (auto *btn : findChildren<QPushButton *>()) {
         btn->setFixedSize(btnSize, btnSize);
     }
-    resize(45, height());
+    ui->verticalLayout->setContentsMargins(0, 5, 0, 5);
+    ui->verticalLayout->setSpacing(4);
+    ui->verticalLayout->setAlignment(Qt::AlignHCenter);
+    resize(windowWidth, height());
+
+    // 高度跟随 VideoForm（parent），减去顶部标题栏 28pt
+    if (auto *videoForm = dynamic_cast<VideoForm*>(parent())) {
+        int targetHeight = videoForm->height() - 28;
+        if (targetHeight > 0) {
+            resize(windowWidth, targetHeight);
+        }
+    }
 #endif
 
     updateGroupControl();
