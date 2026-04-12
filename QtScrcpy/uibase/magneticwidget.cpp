@@ -8,7 +8,16 @@ MagneticWidget::MagneticWidget(QWidget *adsorbWidget, AdsorbPositions adsorbPos)
 {
     Q_ASSERT(m_adsorbWidget);
     setParent(m_adsorbWidget);
+#ifdef Q_OS_MACOS
+    // On macOS, Qt::Tool maps to NSPanel which enforces a minimum window width (~69pt).
+    // Use Qt::Window + auxiliary flags to avoid this system constraint while keeping
+    // the panel-like behaviour (no Dock icon, stays on top of parent, no focus stealing).
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint
+                   | Qt::WindowDoesNotAcceptFocus
+                   | Qt::NoDropShadowWindowHint);
+#else
     setWindowFlags(windowFlags() | Qt::Tool);
+#endif
     m_adsorbWidgetSize = m_adsorbWidget->size();
 
     m_adsorbWidget->installEventFilter(this);

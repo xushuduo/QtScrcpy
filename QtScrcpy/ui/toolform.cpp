@@ -15,6 +15,19 @@ ToolForm::ToolForm(QWidget *adsorbWidget, AdsorbPositions adsorbPos) : MagneticW
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     //setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint);
 
+#ifdef Q_OS_MACOS
+    // macOS 上 QPushButton 有默认 content margins（左右各 ~12px），
+    // 导致 layout minimumSize 远大于 .ui 中设置的 20px 宽度。
+    // 将每个按钮设为固定大小并清除布局边距，使窗口能真正缩窄。
+    ui->verticalLayout->setContentsMargins(0, 0, 0, 0);
+    ui->verticalLayout->setSpacing(0);
+    int btnSize = 30;
+    for (auto *btn : findChildren<QPushButton *>()) {
+        btn->setFixedSize(btnSize, btnSize);
+    }
+    resize(45, height());
+#endif
+
     updateGroupControl();
 
     initStyle();
