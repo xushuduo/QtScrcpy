@@ -331,6 +331,11 @@ void Dialog::on_updateDevice_clicked()
     m_adb.execute("", QStringList() << "devices");
 }
 
+void Dialog::on_updateDevice2_clicked()
+{
+    on_updateDevice_clicked();
+}
+
 void Dialog::on_startServerBtn_clicked()
 {
     outLog("start server...", false);
@@ -608,6 +613,11 @@ void Dialog::on_clearOut_clicked()
 void Dialog::on_stopAllServerBtn_clicked()
 {
     qsc::IDeviceManage::getInstance().disconnectAllDevice();
+}
+
+void Dialog::on_stopAllServerBtn2_clicked()
+{
+    on_stopAllServerBtn_clicked();
 }
 
 void Dialog::on_refreshGameScriptBtn_clicked()

@@ -37,6 +37,7 @@ private slots:
     void onDeviceDisconnected(QString serial);
 
     void on_updateDevice_clicked();
+    void on_updateDevice2_clicked();
     void on_startServerBtn_clicked();
     void on_stopServerBtn_clicked();
     void on_wirelessConnectBtn_clicked();
@@ -49,6 +50,7 @@ private slots:
     void on_stopAdbBtn_clicked();
     void on_clearOut_clicked();
     void on_stopAllServerBtn_clicked();
+    void on_stopAllServerBtn2_clicked();
     void on_refreshGameScriptBtn_clicked();
     void on_applyScriptBtn_clicked();
     void on_recordScreenCheck_clicked(bool checked);
