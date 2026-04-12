@@ -76,6 +76,7 @@ Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
                     ui->serialBox->addItem(item);
                     ui->connectedPhoneList->addItem(Config::getInstance().getNickName(item) + "-" + item);
                 }
+                ui->connectedPhoneList->sortItems(Qt::AscendingOrder);
             } else if (args.contains("show") && args.contains("wlan0")) {
                 QString ip = m_adb.getDeviceIPFromStdOut();
                 if (ip.isEmpty()) {
