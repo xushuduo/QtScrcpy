@@ -24,18 +24,10 @@ ToolForm::ToolForm(QWidget *adsorbWidget, AdsorbPositions adsorbPos) : MagneticW
     for (auto *btn : findChildren<QPushButton *>()) {
         btn->setFixedSize(btnSize, btnSize);
     }
-    ui->verticalLayout->setContentsMargins(0, 5, 0, 5);
-    ui->verticalLayout->setSpacing(4);
+    ui->verticalLayout->setContentsMargins(0, 0, 0, 0);
+    ui->verticalLayout->setSpacing(0);
     ui->verticalLayout->setAlignment(Qt::AlignHCenter);
     resize(windowWidth, height());
-
-    // 高度跟随 VideoForm（parent），减去顶部标题栏 28pt
-    if (auto *videoForm = dynamic_cast<VideoForm*>(parent())) {
-        int targetHeight = videoForm->height() - 28;
-        if (targetHeight > 0) {
-            resize(windowWidth, targetHeight);
-        }
-    }
 #endif
 
     updateGroupControl();
@@ -122,6 +114,33 @@ void ToolForm::showEvent(QShowEvent *event)
 {
     Q_UNUSED(event)
     qDebug() << "show event";
+
+#ifdef Q_OS_MACOS
+    // 高度跟随 VideoForm（parent），减去顶部标题栏偏移 30pt
+    int windowWidth = 45;
+    if (auto *videoForm = dynamic_cast<VideoForm*>(parent())) {
+        int targetHeight = videoForm->height() - 30;
+        if (targetHeight > 0) {
+            resize(windowWidth, targetHeight);
+        }
+    }
+
+    // 在所有按钮之间插入 stretch，使按钮均匀分布
+    int btnCount = ui->verticalLayout->count();
+    // 先清除已有的 stretch
+    for (int i = ui->verticalLayout->count() - 1; i >= 0; --i) {
+        QLayoutItem *item = ui->verticalLayout->itemAt(i);
+        if (item->spacerItem()) {
+            ui->verticalLayout->removeItem(item);
+            delete item;
+        }
+    }
+    // 在首尾和按钮间添加 stretch
+    btnCount = ui->verticalLayout->count();
+    for (int i = 0; i <= btnCount; ++i) {
+        ui->verticalLayout->insertStretch(i, 1);
+    }
+#endif
 }
 
 void ToolForm::hideEvent(QHideEvent *event)

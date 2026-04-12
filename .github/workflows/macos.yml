@@ -21,12 +21,9 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        qt-ver: [5.15.2, 6.5.3]        
+        qt-ver: [6.5.3]        
         # 配置qt-ver的额外设置qt-arch-install，build-arch
         include:
-          - qt-ver: 5.15.2
-            qt-arch-install: clang_64
-            build-arch: x64
           - qt-ver: 6.5.3
             qt-arch-install: arm64
             build-arch: arm64
@@ -41,14 +38,7 @@ jobs:
         with:
           path: ${{ env.qt-install-path }}/${{ matrix.qt-arch-install }}
           key: ${{ runner.os }}/${{ matrix.qt-ver }}/${{ matrix.qt-arch-install }}
-      - name: Install Qt5
-        if: startsWith(matrix.qt-ver, '5.')
-        uses: jurplel/install-qt-action@v4.1.1
-        with:
-          version: ${{ matrix.qt-ver }}
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
-      - name: Install Qt6        
-        if: startsWith(matrix.qt-ver, '6.')
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v4.1.1
         with:
           version: ${{ matrix.qt-ver }}
@@ -65,6 +55,7 @@ jobs:
           ENV_QT_PATH: ${{ env.qt-install-path }}
         run: |
           python ci/generate-version.py
+          ci/lrelease.sh
           ci/mac/build_for_mac.sh RelWithDebInfo ${{ matrix.build-arch }}
       # 获取ref最后一个/后的内容
       - name: Get the version
