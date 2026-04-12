@@ -116,20 +116,15 @@ void ToolForm::showEvent(QShowEvent *event)
     qDebug() << "show event";
 
 #ifdef Q_OS_MACOS
-    // 高度跟随 VideoForm（parent），减去顶部标题栏偏移 30pt
+    // 高度跟随 VideoForm（parent）
     int windowWidth = 45;
     if (auto *videoForm = dynamic_cast<VideoForm*>(parent())) {
-        int targetHeight = videoForm->height() - 30;
-        if (targetHeight > 0) {
-            resize(windowWidth, targetHeight);
-        }
+        resize(windowWidth, videoForm->height());
     }
 
-    // 清除已有 spacer 并重新插入，使按钮均匀分布
-    // 注意：m_layoutInited 防止多次 show 重复添加
-    static bool s_layoutInited = false;
-    if (!s_layoutInited) {
-        s_layoutInited = true;
+    // 每个实例独立初始化 stretch 布局
+    if (!m_macLayoutInited) {
+        m_macLayoutInited = true;
 
         // 清除已有 spacer
         for (int i = ui->verticalLayout->count() - 1; i >= 0; --i) {

@@ -59,6 +59,7 @@ private:
     QString m_serial;
     bool m_showTouch = false;
     bool m_isHost = false;
+    bool m_macLayoutInited = false;
 };
 
 #endif // TOOLFORM_H

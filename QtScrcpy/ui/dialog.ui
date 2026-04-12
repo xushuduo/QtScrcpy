@@ -69,7 +69,6 @@
          <bool>false</bool>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
- 
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_13">
            <property name="topMargin">
@@ -667,7 +666,7 @@
                <string>reverse connection</string>
               </property>
               <property name="checked">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>

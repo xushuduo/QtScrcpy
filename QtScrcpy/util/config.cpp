@@ -70,7 +70,7 @@
 #define COMMON_RECORD_BACKGROUD_DEF false
 
 #define COMMON_REVERSE_CONNECT_KEY "ReverseConnect"
-#define COMMON_REVERSE_CONNECT_DEF true
+#define COMMON_REVERSE_CONNECT_DEF false
 
 #define COMMON_SHOW_FPS_KEY "ShowFPS"
 #define COMMON_SHOW_FPS_DEF false
