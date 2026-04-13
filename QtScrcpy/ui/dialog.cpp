@@ -584,7 +584,7 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
             if (out.contains("mDreamingLockscreen=true")) {
                 qDebug() << "[AutoUnlock] device is locked, swiping to unlock...";
                 auto *swipeProc = new QProcess(this);
-                QString swipeCmd = QString("%1 -s %2 shell input touchscreen swipe 900 800 900 400")
+                QString swipeCmd = QString("%1 -s %2 shell input touchscreen swipe 930 880 930 380")
                                        .arg(adbPath).arg(serial);
                 qDebug() << "[AutoUnlock] executing:" << swipeCmd;
                 connect(swipeProc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
