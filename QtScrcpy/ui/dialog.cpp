@@ -579,8 +579,8 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
             }
             checkAdb->deleteLater();
         });
-        // 用 grep 在设备端过滤（整条管道作为一个参数），减少数据传输
-        checkAdb->execute(serial, QStringList() << "shell" << "dumpsys window | grep mDreamingLockscreen");
+        // 不用管道（QProcess::start 不经过 shell），直接 dumpsys 后在本地过滤
+        checkAdb->execute(serial, QStringList() << "shell" << "dumpsys" << "window");
     }
 }
 
