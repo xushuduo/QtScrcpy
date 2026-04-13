@@ -756,7 +756,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>auto unlock</string>
+               <string>自动解锁设备</string>
               </property>
              </widget>
             </item>

@@ -100,7 +100,7 @@
 #define COMMON_SHOW_TOOLBAR_DEF true
 
 #define COMMON_AUTO_UNLOCK_KEY "AutoUnlock"
-#define COMMON_AUTO_UNLOCK_DEF false
+#define COMMON_AUTO_UNLOCK_DEF true
 
 // device config
 #define SERIAL_WINDOW_RECT_KEY_X "WindowRectX"
