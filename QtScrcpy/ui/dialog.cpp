@@ -1,7 +1,9 @@
 ﻿#include <QDebug>
 #include <QFile>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QKeyEvent>
+#include <QProcess>
 #include <QRandomGenerator>
 #include <QTime>
 #include <QTimer>
@@ -556,31 +558,54 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
 
     // 自动解锁：连接成功后，如果勾选了 auto unlock，检测是否在锁屏界面
     if (ui->autoUnlockCheck->isChecked()) {
-        auto *checkAdb = new qsc::AdbProcess(this);
-        connect(checkAdb, &qsc::AdbProcess::adbProcessResult, this,
-                [this, checkAdb, serial](qsc::AdbProcess::ADB_EXEC_RESULT result) {
-            qDebug() << "[AutoUnlock] check lockscreen result:" << result;
-            qDebug() << "[AutoUnlock] stdout:" << checkAdb->getStdOut();
-            qDebug() << "[AutoUnlock] stderr:" << checkAdb->getErrorOut();
-            // 无论 adb 返回码如何，都检查 stdout 是否包含锁屏标志
-            QString out = checkAdb->getStdOut();
+        // 获取 adb 路径
+        QString adbPath = QString::fromLocal8Bit(qgetenv("QTSCRCPY_ADB_PATH"));
+        if (adbPath.isEmpty() || !QFileInfo(adbPath).isFile()) {
+#ifdef Q_OS_WIN32
+            adbPath = QCoreApplication::applicationDirPath() + "/adb.exe";
+#else
+            adbPath = QCoreApplication::applicationDirPath() + "/adb";
+#endif
+        }
+        qDebug() << "[AutoUnlock] adb path:" << adbPath;
+
+        auto *checkProc = new QProcess(this);
+        QString checkCmd = QString("%1 -s %2 shell dumpsys window").arg(adbPath).arg(serial);
+        qDebug() << "[AutoUnlock] executing:" << checkCmd;
+
+        connect(checkProc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+                this, [this, checkProc, serial, adbPath](int exitCode, QProcess::ExitStatus exitStatus) {
+            QString out = QString::fromUtf8(checkProc->readAllStandardOutput());
+            QString err = QString::fromUtf8(checkProc->readAllStandardError());
+            qDebug() << "[AutoUnlock] exitCode:" << exitCode << "exitStatus:" << exitStatus;
+            qDebug() << "[AutoUnlock] stdout:" << out.left(200);
+            qDebug() << "[AutoUnlock] stderr:" << err;
+
             if (out.contains("mDreamingLockscreen=true")) {
                 qDebug() << "[AutoUnlock] device is locked, swiping to unlock...";
-                // 在锁屏界面，模拟上滑解锁
-                auto *swipeAdb = new qsc::AdbProcess(this);
-                connect(swipeAdb, &qsc::AdbProcess::adbProcessResult, swipeAdb,
-                        [swipeAdb](qsc::AdbProcess::ADB_EXEC_RESULT r) {
-                    qDebug() << "[AutoUnlock] swipe result:" << r;
-                    swipeAdb->deleteLater();
+                auto *swipeProc = new QProcess(this);
+                QString swipeCmd = QString("%1 -s %2 shell input touchscreen swipe 900 800 900 400")
+                                       .arg(adbPath).arg(serial);
+                qDebug() << "[AutoUnlock] executing:" << swipeCmd;
+                connect(swipeProc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+                        swipeProc, [swipeProc](int code, QProcess::ExitStatus status) {
+                    qDebug() << "[AutoUnlock] swipe done, exitCode:" << code;
+                    swipeProc->deleteLater();
                 });
-                swipeAdb->execute(serial, QStringList() << "shell" << "input" << "touchscreen" << "swipe" << "900" << "800" << "900" << "400");
+                swipeProc->start("/bin/sh", QStringList() << "-c" << swipeCmd);
             } else {
                 qDebug() << "[AutoUnlock] device is not locked, skip";
             }
-            checkAdb->deleteLater();
+            checkProc->deleteLater();
         });
-        // 不用管道（QProcess::start 不经过 shell），直接 dumpsys 后在本地过滤
-        checkAdb->execute(serial, QStringList() << "shell" << "dumpsys" << "window");
+
+        connect(checkProc, &QProcess::errorOccurred, this, [this, checkProc](QProcess::ProcessError error) {
+            qDebug() << "[AutoUnlock] process error:" << error << checkProc->errorString();
+            checkProc->deleteLater();
+        });
+
+        // 通过 /bin/sh -c 执行，确保命令被正确解析
+        checkProc->start("/bin/sh", QStringList() << "-c" << checkCmd);
     }
 }
 
