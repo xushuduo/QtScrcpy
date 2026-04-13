@@ -767,6 +767,18 @@ void VideoForm::showEvent(QShowEvent *event)
     }
 }
 
+void VideoForm::changeEvent(QEvent *event)
+{
+    QWidget::changeEvent(event);
+    // 当 VideoForm 被激活（从后台切换到前台）时，同步把 ToolForm 也提到最前
+    if (event->type() == QEvent::ActivationChange && isActiveWindow()) {
+        if (m_toolForm && m_toolForm->isVisible()) {
+            m_toolForm->raise();
+            m_toolForm->activateWindow();
+        }
+    }
+}
+
 void VideoForm::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
