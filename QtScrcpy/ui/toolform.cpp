@@ -119,7 +119,7 @@ void ToolForm::showEvent(QShowEvent *event)
     // 高度跟随 VideoForm（parent）
     int windowWidth = 45;
     if (auto *videoForm = dynamic_cast<VideoForm*>(parent())) {
-        resize(windowWidth, videoForm->height());
+        resize(windowWidth, videoForm->height() - 2);
     }
 
     // 每个实例独立初始化 stretch 布局
