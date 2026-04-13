@@ -24,6 +24,7 @@ struct UserBootConfig
     bool simpleMode       = false;
     bool autoUpdateDevice = true;
     bool showToolbar      = true;
+    bool autoUnlock       = false;
 };
 
 class QSettings;

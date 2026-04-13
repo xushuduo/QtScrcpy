@@ -225,6 +225,7 @@ void Dialog::updateBootConfig(bool toView)
         ui->useSingleModeCheck->setChecked(config.simpleMode);
         ui->autoUpdatecheckBox->setChecked(config.autoUpdateDevice);
         ui->showToolbar->setChecked(config.showToolbar);
+        ui->autoUnlockCheck->setChecked(config.autoUnlock);
     } else {
         UserBootConfig config;
 
@@ -245,6 +246,7 @@ void Dialog::updateBootConfig(bool toView)
         config.simpleMode = ui->useSingleModeCheck->isChecked();
         config.autoUpdateDevice = ui->autoUpdatecheckBox->isChecked();
         config.showToolbar = ui->showToolbar->isChecked();
+        config.autoUnlock = ui->autoUnlockCheck->isChecked();
 
         // 保存当前IP到历史记录
         QString currentIp = ui->deviceIpEdt->currentText().trimmed();
@@ -551,6 +553,29 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
 #endif
 
     GroupController::instance().addDevice(serial);
+
+    // 自动解锁：连接成功后，如果勾选了 auto unlock，检测是否在锁屏界面
+    if (ui->autoUnlockCheck->isChecked()) {
+        auto *checkAdb = new qsc::AdbProcess(this);
+        connect(checkAdb, &qsc::AdbProcess::adbProcessResult, this,
+                [this, checkAdb, serial](qsc::AdbProcess::ADB_EXEC_RESULT result) {
+            if (result == qsc::AdbProcess::AER_SUCCESS_EXEC) {
+                QString out = checkAdb->getStdOut() + checkAdb->getErrorOut();
+                if (out.contains("mDreamingLockscreen=true")) {
+                    // 在锁屏界面，模拟上滑解锁
+                    auto *swipeAdb = new qsc::AdbProcess(this);
+                    connect(swipeAdb, &qsc::AdbProcess::adbProcessResult, swipeAdb,
+                            [swipeAdb](qsc::AdbProcess::ADB_EXEC_RESULT) {
+                        swipeAdb->deleteLater();
+                    });
+                    swipeAdb->execute(serial, QStringList() << "shell" << "input" << "touchscreen" << "swipe" << "900" << "800" << "900" << "400");
+                }
+            }
+            checkAdb->deleteLater();
+        });
+        // adb shell "dumpsys window | grep mDreamingLockscreen"
+        checkAdb->execute(serial, QStringList() << "shell" << "dumpsys window | grep mDreamingLockscreen");
+    }
 }
 
 void Dialog::onDeviceDisconnected(QString serial)
