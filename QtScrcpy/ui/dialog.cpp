@@ -559,21 +559,27 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
         auto *checkAdb = new qsc::AdbProcess(this);
         connect(checkAdb, &qsc::AdbProcess::adbProcessResult, this,
                 [this, checkAdb, serial](qsc::AdbProcess::ADB_EXEC_RESULT result) {
-            if (result == qsc::AdbProcess::AER_SUCCESS_EXEC) {
-                QString out = checkAdb->getStdOut() + checkAdb->getErrorOut();
-                if (out.contains("mDreamingLockscreen=true")) {
-                    // 在锁屏界面，模拟上滑解锁
-                    auto *swipeAdb = new qsc::AdbProcess(this);
-                    connect(swipeAdb, &qsc::AdbProcess::adbProcessResult, swipeAdb,
-                            [swipeAdb](qsc::AdbProcess::ADB_EXEC_RESULT) {
-                        swipeAdb->deleteLater();
-                    });
-                    swipeAdb->execute(serial, QStringList() << "shell" << "input" << "touchscreen" << "swipe" << "900" << "800" << "900" << "400");
-                }
+            qDebug() << "[AutoUnlock] check lockscreen result:" << result;
+            qDebug() << "[AutoUnlock] stdout:" << checkAdb->getStdOut();
+            qDebug() << "[AutoUnlock] stderr:" << checkAdb->getErrorOut();
+            // 无论 adb 返回码如何，都检查 stdout 是否包含锁屏标志
+            QString out = checkAdb->getStdOut();
+            if (out.contains("mDreamingLockscreen=true")) {
+                qDebug() << "[AutoUnlock] device is locked, swiping to unlock...";
+                // 在锁屏界面，模拟上滑解锁
+                auto *swipeAdb = new qsc::AdbProcess(this);
+                connect(swipeAdb, &qsc::AdbProcess::adbProcessResult, swipeAdb,
+                        [swipeAdb](qsc::AdbProcess::ADB_EXEC_RESULT r) {
+                    qDebug() << "[AutoUnlock] swipe result:" << r;
+                    swipeAdb->deleteLater();
+                });
+                swipeAdb->execute(serial, QStringList() << "shell" << "input" << "touchscreen" << "swipe" << "900" << "800" << "900" << "400");
+            } else {
+                qDebug() << "[AutoUnlock] device is not locked, skip";
             }
             checkAdb->deleteLater();
         });
-        // adb shell "dumpsys window | grep mDreamingLockscreen"
+        // 用 grep 在设备端过滤（整条管道作为一个参数），减少数据传输
         checkAdb->execute(serial, QStringList() << "shell" << "dumpsys window | grep mDreamingLockscreen");
     }
 }
