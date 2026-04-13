@@ -588,7 +588,7 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
                                        .arg(adbPath).arg(serial);
                 qDebug() << "[AutoUnlock] executing:" << swipeCmd;
                 connect(swipeProc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-                        swipeProc, [swipeProc](int code, QProcess::ExitStatus status) {
+                        swipeProc, [swipeProc](int code, QProcess::ExitStatus) {
                     qDebug() << "[AutoUnlock] swipe done, exitCode:" << code;
                     swipeProc->deleteLater();
                 });
@@ -599,7 +599,7 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
             checkProc->deleteLater();
         });
 
-        connect(checkProc, &QProcess::errorOccurred, this, [this, checkProc](QProcess::ProcessError error) {
+        connect(checkProc, &QProcess::errorOccurred, this, [checkProc](QProcess::ProcessError error) {
             qDebug() << "[AutoUnlock] process error:" << error << checkProc->errorString();
             checkProc->deleteLater();
         });
